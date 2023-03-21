@@ -9,3 +9,7 @@ spring:
 server:
   address: localhost
   port: 8080
+
+age:
+  min: 18
+  max: 100

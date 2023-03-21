@@ -1,17 +1,15 @@
 package com.example.demo3;
 
 import com.example.demo3.entity.Person;
-import com.example.demo3.validator.PersonValidator;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 class DemoApplicationTests extends BaseTest {
+
     @BeforeEach
     void setUp() {
         System.out.println("DemoApplicationTests setup");
@@ -21,6 +19,9 @@ class DemoApplicationTests extends BaseTest {
     void assertMinAge() {
         var person = new Person();
         person.setAge(minAge - 1);
+
+        when(personRepository.getReferenceById(anyInt()))
+                .thenReturn(person);
 
         var ex = Assertions.assertThrows(
                 RuntimeException.class,
@@ -34,6 +35,9 @@ class DemoApplicationTests extends BaseTest {
     void assertMaxAge() {
         var person = new Person();
         person.setAge(maxAge + 1);
+
+        when(personRepository.getReferenceById(anyInt()))
+                .thenReturn(person);
 
         var ex = Assertions.assertThrows(
                 RuntimeException.class,
